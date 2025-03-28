@@ -1,4 +1,4 @@
-#include "error.h"
+#include "../../include/error.h"
 #include <err.h>
 #include <execinfo.h>
 #include <signal.h>

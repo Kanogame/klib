@@ -1,15 +1,15 @@
-#include "matrix.h"
+#include "../../include/matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 // utils
-static int matrix_alloc(matrix *mat) {
-  mat->value = (double **)malloc(mat->height * sizeof(double *));
+int matrix_alloc(matrix *mat) {
+  mat->value = (double **)calloc(mat->height, sizeof(double *));
   if (mat->value == NULL) {
     return -1;
   }
   for (int i = 0; i < mat->width; i++) {
-    mat->value[i] = (double *)malloc(mat->width * sizeof(double));
+    mat->value[i] = (double *)calloc(mat->width, sizeof(double));
     if (mat->value[i] == NULL) {
       return -1;
     }

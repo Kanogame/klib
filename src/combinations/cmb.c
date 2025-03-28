@@ -1,8 +1,5 @@
 #include <stdlib.h>
 
-// cmb_Combination создает подмножества множества, порядок не важен, есть
-// повторения - от нуля до srclen подмножества возможно использовать как массивы
-// индексов, что и происходит
 void cmb_CombinationRepeat(int srclen, int len, int *source) {
   int *comb = (int *)malloc(len * sizeof(int));
   for (int i = 0; i < len; i++) {
