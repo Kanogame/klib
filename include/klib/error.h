@@ -23,8 +23,6 @@
 
 #define MAX_BACKTRACE_LINES 64
 
-static char *_programName;
-
 void printStacktrace(int calledFromSigInt);
 
 int addr2line(char const *const program_name, void const *const addr,

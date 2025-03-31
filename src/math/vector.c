@@ -1,5 +1,5 @@
-#include "../../include/vector.h"
-#include "../../include/matrix.h"
+#include "../../include/klib/vector.h"
+#include "../../include/klib/matrix.h"
 #include <stdlib.h>
 
 vector3 *vector_multiplyBy4x4(vector3 *vec, matrix *matrix) {

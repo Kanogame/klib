@@ -1,10 +1,13 @@
-#include "../../include/error.h"
+#include "../../include/klib/error.h"
 #include <err.h>
 #include <execinfo.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+static char *_programName;
+
 
 // prints formated stack trace
 void printStacktrace(int calledFromSigInt) {

@@ -5,7 +5,7 @@ inc = include_directories('include')
 
 klib_sources = files(
     'src/combinations/cmb.c',
-    'src/exeption/error.c',
+'src/exeption/error.c',
     'src/list/list.c',
     'src/math/matrix.c',
     'src/math/vector.c',
@@ -13,22 +13,21 @@ klib_sources = files(
 )
 
 inc_files = files(
-    'include/cmb.h',
-    'include/error.h',
-    'include/list.h',
-    'include/matrix.h',
-    'include/sort.h',
-    'include/vector.h',
+    'include/klib/cmb.h',
+    'include/klib/error.h',
+    'include/klib/list.h',
+    'include/klib/matrix.h',
+    'include/klib/sort.h',
+    'include/klib/vector.h',
 )
 
-lib_klib = library(
+lib_klib = shared_library(
     'klib',
     klib_sources,
     include_directories: inc,
     install: true,
-    install_dir: get_option('includedir'),
 )
 
-install_headers(inc_files, subdir: get_option('includedir') / 'klib')
+install_headers(inc_files, subdir: 'klib')
 
-lib_klib
+klib_dep = declare_dependency(include_directories: inc, link_with: lib_klib)
