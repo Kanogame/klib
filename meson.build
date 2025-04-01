@@ -5,7 +5,8 @@ inc = include_directories('include')
 
 klib_sources = files(
     'src/combinations/cmb.c',
-'src/exeption/error.c',
+    'src/exeption/error.c',
+    'src/heap/binary_heap.c',
     'src/list/list.c',
     'src/math/matrix.c',
     'src/math/vector.c',
@@ -13,6 +14,7 @@ klib_sources = files(
 )
 
 inc_files = files(
+    'include/klib/binary_heap.h',
     'include/klib/cmb.h',
     'include/klib/error.h',
     'include/klib/list.h',
@@ -21,7 +23,7 @@ inc_files = files(
     'include/klib/vector.h',
 )
 
-lib_klib = shared_library(
+lib_klib = static_library(
     'klib',
     klib_sources,
     include_directories: inc,
