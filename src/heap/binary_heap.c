@@ -22,6 +22,7 @@ BinaryTree *binaryHeap_buildTree(int *tree, int i, int rootsEnd, int size,
   } else {
     current->right = NULL;
   }
+  return current;
 }
 
 void binaryHeap_heapifyUp(int *heap, int size, int child) {
