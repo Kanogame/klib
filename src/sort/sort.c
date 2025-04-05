@@ -1,4 +1,5 @@
 #include "../../include/klib/sort.h"
+#include "../../include/klib/macros.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,9 +9,7 @@ void sort_bubble(int *arr, int size) {
     flag = 0;
     for (int j = 0; j < size - i - 1; j++) {
       if (arr[j] > arr[j + 1]) {
-        tmp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = tmp;
+        XOR_SWAP(arr[j], arr[j + 1]);
         flag = 1;
       }
     }
@@ -19,10 +18,10 @@ void sort_bubble(int *arr, int size) {
   }
 }
 
-static int min(int *arr, int size) {
-  int min = arr[0];
+static int min(int *arr, int start, int end) {
+  int min = arr[start];
   int id;
-  for (int i = 1; i < size; i++) {
+  for (int i = start + 1; i < end; i++) {
     if (arr[i] < min) {
       min = arr[i];
       id = i;
@@ -32,16 +31,11 @@ static int min(int *arr, int size) {
 }
 
 void sort_selection(int *arr, int size) {
-  int minid, tmp;
-  for (int i = 0; i < size; i++) {
-    minid = min(arr + (sizeof(int) * i), size - i) + i;
-    if (minid == i) {
-      continue;
-    }
+  int minid;
+  for (int i = 0; i < size - 1; i++) {
+    minid = min(arr, i + 1, size);
 
-    tmp = arr[minid];
-    arr[minid] = arr[i];
-    arr[i] = tmp;
+    XOR_SWAP(arr[minid], arr[i]);
   }
 }
 
@@ -94,9 +88,7 @@ void sort_cocktail(int *arr, int size) {
     new_end = start;
     for (int i = start; i < end; i++) {
       if (arr[i] > arr[i + 1]) {
-        tmp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = tmp;
+        XOR_SWAP(arr[i], arr[i + 1]);
         new_end = i;
       }
     }
@@ -111,9 +103,7 @@ void sort_cocktail(int *arr, int size) {
 
     for (int i = end; i >= start; i--) {
       if (arr[i] < arr[i - 1]) {
-        tmp = arr[i];
-        arr[i] = arr[i - 1];
-        arr[i - 1] = tmp;
+        XOR_SWAP(arr[i], arr[i - 1]);
         new_start = 1;
       }
     }
@@ -122,19 +112,39 @@ void sort_cocktail(int *arr, int size) {
   }
 }
 
+void sort_comb(int *arr, int size) {
+  int flag = 0;
+  int step = size - 1;
+
+  float factor = 1.3f;
+
+  while (step > 1 || flag) {
+    if (step <= 1) {
+      step = 1;
+    }
+    flag = 0;
+
+    for (int i = 0; i < size - step; i++) {
+      if (arr[i] > arr[i + step]) {
+        flag = 1;
+        XOR_SWAP(arr[i], arr[i + step]);
+      }
+    }
+    step /= factor;
+  }
+}
+
 sort_Stats *sort_bubbleStats(int *arr, int size) {
   int comp = 0;
   int swaps = 0;
 
-  int flag, tmp;
+  int flag;
   for (int i = 0; i < size - 1; i++) {
     flag = 0;
     for (int j = 0; j < size - 1; j++) {
       comp++;
       if (arr[j] > arr[j + 1]) {
-        tmp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = tmp;
+        XOR_SWAP(arr[j], arr[j + 1]);
         flag = 1;
         swaps++;
       }
@@ -161,9 +171,7 @@ sort_Stats *sort_cocktailStats(int *arr, int size) {
     for (int i = start; i < end; i++) {
       comp++;
       if (arr[i] > arr[i + 1]) {
-        tmp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = tmp;
+        XOR_SWAP(arr[i], arr[i + 1]);
         new_end = i;
         swaps++;
       }
@@ -180,9 +188,7 @@ sort_Stats *sort_cocktailStats(int *arr, int size) {
     for (int i = end; i >= start; i--) {
       comp++;
       if (arr[i] < arr[i - 1]) {
-        tmp = arr[i];
-        arr[i] = arr[i - 1];
-        arr[i - 1] = tmp;
+        XOR_SWAP(arr[i], arr[i - 1]);
         new_start = 1;
         swaps++;
       }
