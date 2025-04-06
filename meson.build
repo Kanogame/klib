@@ -8,12 +8,14 @@ klib_sources = files(
     'src/exeption/error.c',
     'src/heap/binary_heap.c',
     'src/list/list.c',
+    'src/math/approx.c',
     'src/math/matrix.c',
     'src/math/vector.c',
     'src/sort/sort.c',
 )
 
 inc_files = files(
+    'include/klib/approx.h',
     'include/klib/binary_heap.h',
     'include/klib/cmb.h',
     'include/klib/error.h',

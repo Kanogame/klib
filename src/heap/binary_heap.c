@@ -1,4 +1,4 @@
-#include "../../include/klib/binary_heap.h"
+#include <klib/binary_heap.h>
 #include <stdlib.h>
 
 BinaryTree *binaryHeap_buildTree(int *tree, int i, int rootsEnd, int size,

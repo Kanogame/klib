@@ -1,4 +1,4 @@
-#include "../../include/klib/list.h"
+#include <klib/list.h>
 #include <stdlib.h>
 
 Node *list_Add(Node *top, void *value) {

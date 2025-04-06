@@ -1,5 +1,5 @@
-#include "../../include/klib/sort.h"
-#include "../../include/klib/macros.h"
+#include <klib/macros.h>
+#include <klib/sort.h>
 #include <stdio.h>
 #include <stdlib.h>
 
