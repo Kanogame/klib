@@ -1,5 +1,6 @@
 #include <klib/macros.h>
 #include <klib/sort.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -133,6 +134,57 @@ void sort_comb(int *arr, int size) {
     step /= factor;
   }
 }
+
+static void gap_insertion(int *arr, int size, int gap) {
+  int temp, j;
+  for (int i = gap; i < size; i++) {
+    temp = arr[i];
+    for (j = i; (j >= gap) && (arr[j - gap] > temp); j -= gap) {
+      arr[j] = arr[j - gap];
+    }
+
+    arr[j] = temp;
+  }
+}
+
+void sort_shell(int *arr, int size, int *(*gen)(int, int)) {
+  int max_steps = 0;
+  // log2(size) of elements
+  for (int i = size / 2; i > 0; i /= 2) {
+    max_steps++;
+  }
+
+  int *steps = gen(max_steps, size);
+  for (int step = 0; step < max_steps; step++) {
+    gap_insertion(arr, size, steps[step]);
+  }
+}
+
+int *sort_seqSed(int size, int arrayLen) {
+  int *res = malloc(sizeof(int) * size);
+
+  for (int i = 0; i < size; i++) {
+    if (i % 1 == 0)
+      res[i] = 9 * pow(2, i) - 9 * pow(2, i / 2) + 1;
+    else
+      res[i] = 8 * pow(2, i) - 6 * pow(2, (i + 1) / 2) + 1;
+  }
+  return res;
+}
+
+int *sort_seqShell(int size, int arrayLen) {
+  int *res = malloc(sizeof(int) * size);
+
+  res[0] = arrayLen / 2;
+
+  for (int i = 1; i < size; i++) {
+    res[i] = res[i - 1] / 2;
+  }
+
+  res[size - 1] = 1;
+  return res;
+}
+
 static void sort_hoarRec(int *arr, int first, int last) {
   if (first >= last) {
     return;
