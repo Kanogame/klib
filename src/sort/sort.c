@@ -116,7 +116,7 @@ void sort_comb(int *arr, int size) {
   int flag = 0;
   int step = size - 1;
 
-  float factor = 1.3f;
+  float factor = 11.f / 8.f;
 
   while (step > 1 || flag) {
     if (step <= 1) {
@@ -133,6 +133,41 @@ void sort_comb(int *arr, int size) {
     step /= factor;
   }
 }
+static void sort_hoarRec(int *arr, int first, int last) {
+  if (first >= last) {
+    return;
+  }
+
+  int med = arr[first + ((last - first) / 2)];
+  int i = first;
+  int j = last;
+  while (i <= j) {
+    // search for values, >= than med
+    while (arr[i] < med)
+      i++;
+
+    // search for values, <= than med
+    while (arr[j] > med)
+      j--;
+    if (i <= j) {
+      // when both are found, swap
+      if (i < j) {
+        XOR_SWAP(arr[i], arr[j]);
+      }
+      // advance counters
+      i++;
+      j--;
+    }
+  }
+
+  // recursive calls for both parts
+  if (first < j)
+    sort_hoarRec(arr, first, j);
+  if (i < last)
+    sort_hoarRec(arr, i, last);
+}
+
+void sort_hoar(int *arr, int size) { sort_hoarRec(arr, 0, size - 1); }
 
 sort_Stats *sort_bubbleStats(int *arr, int size) {
   int comp = 0;

@@ -13,7 +13,7 @@ void sort_selection(int *arr, int size);
 void sort_binaryInsertion(int *arr, int size);
 void sort_cocktail(int *arr, int size);
 void sort_comb(int *arr, int size);
-
+void sort_hoar(int *arr, int size);
 sort_Stats *sort_bubbleStats(int *arr, int size);
 sort_Stats *sort_cocktailStats(int *arr, int size);
 
