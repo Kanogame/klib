@@ -221,6 +221,46 @@ static void sort_hoarRec(int *arr, int first, int last) {
 
 void sort_hoar(int *arr, int size) { sort_hoarRec(arr, 0, size - 1); }
 
+void sort_merge(int *arr, int start, int end) {
+  if (end - start <= 1) {
+    return;
+  }
+
+  int mid = start + (end - start) / 2;
+
+  // recursion
+  sort_merge(arr, start, mid);
+  sort_merge(arr, mid, end);
+
+  int *tmp = malloc(sizeof(int) * (end - start));
+  // merge
+  int i = start, j = mid, k = 0;
+
+  // merge the two sorted halves, using postrements, to make code shorter
+  while (i < mid && j < end) {
+    if (arr[i] <= arr[j]) {
+      tmp[k++] = arr[i++];
+    } else {
+      tmp[k++] = arr[j++];
+    }
+  }
+
+  // Copy remaining elements from the left and right half if any.
+  while (i < mid) {
+    tmp[k++] = arr[i++];
+  }
+
+  while (j < end) {
+    tmp[k++] = arr[j++];
+  }
+
+  for (int l = start; l < end; l++) {
+    arr[l] = tmp[l - start];
+  }
+
+  free(tmp);
+}
+
 sort_Stats *sort_bubbleStats(int *arr, int size) {
   int comp = 0;
   int swaps = 0;
