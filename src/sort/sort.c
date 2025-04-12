@@ -290,6 +290,31 @@ sort_Stats *sort_cocktailStats(int *arr, int size) {
   return res;
 }
 
+sort_Stats *sort_shellStats(int *arr, int size) {
+  int comp = 0;
+  int swaps = 0;
+
+  int gap = size / 2;
+  while (gap >= 1) {
+    int temp, j;
+    for (int i = gap; i < size; i++) {
+      temp = arr[i];
+      for (j = i; (j >= gap) && (arr[j - gap] > temp) && comp++; j -= gap) {
+        swaps++;
+        arr[j] = arr[j - gap];
+      }
+
+      swaps++;
+      arr[j] = temp;
+    }
+    gap /= 2;
+  }
+  sort_Stats *res = malloc(sizeof(sort_Stats));
+  res->comparisons = comp;
+  res->swaps = swaps;
+  return res;
+}
+
 void sort_bubbleComp(void **arr, int size, int (*bigger)(void *, void *)) {
   int flag;
   void *tmp;
