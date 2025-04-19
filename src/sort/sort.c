@@ -221,6 +221,30 @@ static void sort_hoarRec(int *arr, int first, int last) {
 
 void sort_hoar(int *arr, int size) { sort_hoarRec(arr, 0, size - 1); }
 
+void merge(int arr[], int temp[], int left, int mid, int right) {
+  int i = left, j = mid, k = left;
+
+  // Merge until one run is exhausted
+  while (i < mid && j < right) {
+    if (arr[i] <= arr[j])
+      temp[k++] = arr[i++];
+    else
+      temp[k++] = arr[j++];
+  }
+
+  // Copy any remaining elements of the left run
+  while (i < mid)
+    temp[k++] = arr[i++];
+
+  // Copy any remaining elements of the right run
+  while (j < right)
+    temp[k++] = arr[j++];
+
+  // Copy merged elements back to arr
+  for (i = left; i < right; i++)
+    arr[i] = temp[i];
+}
+
 void sort_merge(int *arr, int start, int end) {
   if (end - start <= 1) {
     return;
@@ -232,33 +256,28 @@ void sort_merge(int *arr, int start, int end) {
   sort_merge(arr, start, mid);
   sort_merge(arr, mid, end);
 
-  int *tmp = malloc(sizeof(int) * (end - start));
-  // merge
-  int i = start, j = mid, k = 0;
+  int *temp = malloc(sizeof(int) * end - start);
+  merge(arr, temp, start, mid, end);
+}
 
-  // merge the two sorted halves, using postrements, to make code shorter
-  while (i < mid && j < end) {
-    if (arr[i] <= arr[j]) {
-      tmp[k++] = arr[i++];
-    } else {
-      tmp[k++] = arr[j++];
+void sort_raising_merge(int *arr, int size) {
+  int *temp = malloc(sizeof(int) * size);
+
+  for (int step = 1; step < size; step *= 2)
+    for (int left = 0; left < size; left += 2 * step) {
+      int mid = left + step;
+      int right = left + 2 * step;
+
+      if (mid > size)
+        mid = size;
+      if (right > size)
+        right = size;
+
+      if (mid < right) {
+        merge(arr, temp, left, mid, right);
+      }
     }
-  }
-
-  // Copy remaining elements from the left and right half if any.
-  while (i < mid) {
-    tmp[k++] = arr[i++];
-  }
-
-  while (j < end) {
-    tmp[k++] = arr[j++];
-  }
-
-  for (int l = start; l < end; l++) {
-    arr[l] = tmp[l - start];
-  }
-
-  free(tmp);
+  free(temp);
 }
 
 sort_Stats *sort_bubbleStats(int *arr, int size) {
@@ -331,15 +350,16 @@ sort_Stats *sort_cocktailStats(int *arr, int size) {
 }
 
 sort_Stats *sort_shellStats(int *arr, int size) {
-  int comp = 0;
+  int comp = 1;
   int swaps = 0;
 
   int gap = size / 2;
-  while (gap >= 1) {
+  while (gap >= 1 && comp++) {
     int temp, j;
-    for (int i = gap; i < size; i++) {
+    for (int i = gap; i < size && comp++; i++) {
       temp = arr[i];
-      for (j = i; (j >= gap) && (arr[j - gap] > temp) && comp++; j -= gap) {
+      for (j = i; (j >= gap) && (arr[j - gap] > temp); j -= gap) {
+        comp += 2;
         swaps++;
         arr[j] = arr[j - gap];
       }
@@ -351,6 +371,65 @@ sort_Stats *sort_shellStats(int *arr, int size) {
   }
   sort_Stats *res = malloc(sizeof(sort_Stats));
   res->comparisons = comp;
+  res->swaps = swaps;
+  return res;
+}
+
+sort_Stats *sort_mergeStats(int *arr, int size) {
+  int comp = 1;
+  int swaps = 0;
+
+  int *temp = malloc(sizeof(int) * size);
+
+  for (int step = 1; step < size && comp++; step *= 2)
+    for (int left = 0; left < size && comp++; left += 2 * step) {
+      // getting middle and right offsets for current section
+      int mid = left + step;
+      int right = left + 2 * step;
+
+      if (mid > size && comp++)
+        mid = size;
+      if (right > size && comp++)
+        right = size;
+
+      int i = left, j = mid, k = left;
+
+      // merging two arrays until one of arrays is depleted
+      while (i < mid && j < right) {
+        comp += 3;
+        if (arr[i] <= arr[j]) {
+          temp[k++] = arr[i++];
+        } else {
+          temp[k++] = arr[j++];
+        }
+        swaps++;
+      }
+
+      // Copying left elemnts
+      int copy = 0;
+      int end = 0;
+      if (i < j && comp++) {
+        copy = i;
+        end = mid;
+      } else {
+        copy = j;
+        end = right;
+      }
+      while (copy < end) {
+        temp[k++] = arr[copy++];
+        swaps++;
+      }
+
+      // Copy merged elements back to arr
+      for (i = left; i < right; i++) {
+        arr[i] = temp[i];
+        swaps++;
+      }
+    }
+  free(temp);
+
+  sort_Stats *res = malloc(sizeof(sort_Stats));
+  res->comparisons = comp - 1;
   res->swaps = swaps;
   return res;
 }

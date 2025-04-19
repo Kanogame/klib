@@ -19,9 +19,11 @@ int *sort_seqSed(int size, int arrayLen);
 int *sort_seqShell(int size, int arrayLen);
 
 void sort_merge(int *arr, int start, int end);
+void sort_raising_merge(int *arr, int size);
 sort_Stats *sort_bubbleStats(int *arr, int size);
 sort_Stats *sort_cocktailStats(int *arr, int size);
 sort_Stats *sort_shellStats(int *arr, int size);
+sort_Stats *sort_mergeStats(int *arr, int size);
 
 // generic implementation with comparator functions
 void sort_bubbleComp(void **arr, int size, int (*bigger)(void *, void *));
