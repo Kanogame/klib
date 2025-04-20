@@ -19,7 +19,10 @@ typedef struct BinaryTree {
 BinaryTree *binaryHeap_buildTree(int *tree, int i, int rootsEnd, int size,
                                  BinaryTree *parent);
 
-void binaryHeap_push(int **heap, int *size, int value);
-
-int binaryHeap_pop(int **heap, int *size);
+int binaryHeap_readHeap(char *path, int **heap, int *size);
+int binaryHeap_push(int **heap, int *size, int value);
+int binaryHeap_popValue(int **heap, int *size, int value);
+int binaryHeap_changeKey(int **heap, int *size, int before, int after);
+int binaryHeap_popMax(int **heap, int *size);
+int binaryHeap_search(int *heap, int size, int node, int target);
 #endif
