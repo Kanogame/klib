@@ -11,6 +11,7 @@ klib_sources = files(
     'src/math/approx.c',
     'src/math/matrix.c',
     'src/math/vector.c',
+    'src/sort/radix.c',
     'src/sort/sort.c',
 )
 
@@ -21,6 +22,7 @@ inc_files = files(
     'include/klib/error.h',
     'include/klib/list.h',
     'include/klib/matrix.h',
+    'include/klib/radix.h',
     'include/klib/sort.h',
     'include/klib/vector.h',
 )
