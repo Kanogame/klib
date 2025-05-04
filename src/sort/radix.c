@@ -75,7 +75,7 @@ void radix_msd_stings(char **a, int start, int end, int digit, int maxDigit) {
     EXIT_WITH_ERROR("err");
   }
 
-  for (int i = start; i < end; ++i) {
+  for (int i = start; i <= end; i++) {
     int c = a[i][digit];
     count[c + 1]++;
   }
@@ -93,13 +93,13 @@ void radix_msd_stings(char **a, int start, int end, int digit, int maxDigit) {
     }
   }
 
-  int size = end - start;
+  int size = end - start + 1;
   char **aux = calloc(size, sizeof(char *));
   if (aux == NULL) {
     EXIT_WITH_ERROR("err");
   }
 
-  for (int i = start; i < end; ++i) {
+  for (int i = start; i <= end; i++) {
     int c = a[i][digit];
     aux[count[c]++] = a[i];
   }
@@ -111,7 +111,45 @@ void radix_msd_stings(char **a, int start, int end, int digit, int maxDigit) {
   free(count);
 
   for (int r = 0; r < bsize / 2; r++) {
-    radix_msd_stings(a, bound[r * 2], bound[r * 2 + 1], digit + 1, maxDigit);
+    radix_msd_stings(a, bound[r * 2], bound[r * 2 + 1] - 1, digit + 1,
+                     maxDigit);
   }
   free(bound);
+}
+
+void radix_lsd_strings(char **a, int size, int digit) {
+  int *count = calloc(R, sizeof(int));
+  if (count == NULL) {
+    EXIT_WITH_ERROR("err");
+  }
+
+  char **aux = calloc(size, sizeof(char *));
+  if (aux == NULL) {
+    EXIT_WITH_ERROR("err");
+  }
+
+  while (digit >= 0) {
+    for (int i = 0; i < size; ++i) {
+      int c = a[i][digit];
+      count[c + 1]++;
+    }
+
+    for (int r = 0; r < R; r++) {
+      count[r + 1] += count[r];
+    }
+
+    for (int i = 0; i < size; i++) {
+      int c = a[i][digit];
+      aux[count[c]++] = a[i];
+    }
+
+    for (int i = 0; i < size; i++) {
+      a[i] = aux[i];
+    }
+
+    for (int i = 0; i < R; i++) {
+      count[i] = 0;
+    }
+    digit--;
+  }
 }
