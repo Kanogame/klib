@@ -260,7 +260,7 @@ void sort_merge(int *arr, int start, int end) {
   merge(arr, temp, start, mid, end);
 }
 
-void sort_raising_merge(int *arr, int size) {
+void sort_mergeRaising(int *arr, int size) {
   int *temp = malloc(sizeof(int) * size);
 
   for (int step = 1; step < size; step *= 2)

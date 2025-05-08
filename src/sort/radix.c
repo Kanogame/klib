@@ -8,7 +8,7 @@
 inline static int bin(int value, int digit) { return ((value >> digit) & 1); }
 
 // fast binary sort
-void radix_msd_binary(int *array, int size, int digit) {
+void radix_MSDBinary(int *array, int size, int digit) {
   if (digit < 0 || size == 0) {
     return;
   }
@@ -27,11 +27,11 @@ void radix_msd_binary(int *array, int size, int digit) {
     }
   }
 
-  radix_msd_binary(array, i, digit - 1);
-  radix_msd_binary(array + i, size - i, digit - 1);
+  radix_MSDBinary(array, i, digit - 1);
+  radix_MSDBinary(array + i, size - i, digit - 1);
 }
 
-sort_Stats *radix_msd_binary_stats(int *array, int size, int digit) {
+sort_Stats *radix_MSDBinaryStats(int *array, int size, int digit) {
   if (digit < 0 || size == 0) {
     return malloc(sizeof(sort_Stats));
   }
@@ -55,8 +55,8 @@ sort_Stats *radix_msd_binary_stats(int *array, int size, int digit) {
     cmp++;
   }
 
-  sort_Stats *val1 = radix_msd_binary_stats(array, i, digit - 1);
-  sort_Stats *val2 = radix_msd_binary_stats(array + i, size - i, digit - 1);
+  sort_Stats *val1 = radix_MSDBinaryStats(array, i, digit - 1);
+  sort_Stats *val2 = radix_MSDBinaryStats(array + i, size - i, digit - 1);
   val1->comparisons += val2->comparisons + cmp;
   val1->swaps += val2->swaps + swaps;
   return val1;
@@ -66,7 +66,7 @@ sort_Stats *radix_msd_binary_stats(int *array, int size, int digit) {
 
 #define CUTOFF 15
 
-void radix_msd_stings(char **a, int start, int end, int digit, int maxDigit) {
+void radix_MSDString(char **a, int start, int end, int digit, int maxDigit) {
   if (end <= start || digit >= maxDigit)
     return;
 
@@ -111,13 +111,12 @@ void radix_msd_stings(char **a, int start, int end, int digit, int maxDigit) {
   free(count);
 
   for (int r = 0; r < bsize / 2; r++) {
-    radix_msd_stings(a, bound[r * 2], bound[r * 2 + 1] - 1, digit + 1,
-                     maxDigit);
+    radix_MSDString(a, bound[r * 2], bound[r * 2 + 1] - 1, digit + 1, maxDigit);
   }
   free(bound);
 }
 
-void radix_lsd_strings(char **a, int size, int digit) {
+void radix_LSDString(char **a, int size, int digit) {
   int *count = calloc(R, sizeof(int));
   if (count == NULL) {
     EXIT_WITH_ERROR("err");
