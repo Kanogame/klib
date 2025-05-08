@@ -11,8 +11,10 @@ klib_sources = files(
     'src/math/approx.c',
     'src/math/matrix.c',
     'src/math/vector.c',
+    'src/randutils/randstring.c',
     'src/sort/radix.c',
     'src/sort/sort.c',
+
 )
 
 inc_files = files(
@@ -22,10 +24,23 @@ inc_files = files(
     'include/klib/error.h',
     'include/klib/list.h',
     'include/klib/matrix.h',
-    'include/klib/radix.h',
+    'include/klib/randutils.h',
     'include/klib/sort.h',
     'include/klib/vector.h',
 )
+
+# written in RV64 asm
+if false
+    klib_sources += files(
+        'src/asm/crypt/xorshift.s',
+        'src/asm/string/size.s',
+    )
+
+    inc_files += files(
+        'include/klib/asm/crypt.h',
+        'include/klib/asm/string.h',
+    )
+endif
 
 lib_klib = static_library(
     'klib',
