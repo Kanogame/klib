@@ -14,6 +14,7 @@ klib_sources = files(
     'src/randutils/randstring.c',
     'src/sort/radix.c',
     'src/sort/sort.c',
+    'src/string/substring.c',
 
 )
 
@@ -27,6 +28,7 @@ inc_files = files(
     'include/klib/randutils.h',
     'include/klib/sort.h',
     'include/klib/vector.h',
+    'include/klib/string.h',
 )
 
 # written in RV64 asm
