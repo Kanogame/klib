@@ -11,4 +11,7 @@ matrix *matrix_multiply(matrix *a, matrix *b);
 
 int matrix_alloc(matrix *mat);
 
+int next_prime(int x);
+int is_prime(int x);
+ 
 #endif

@@ -11,9 +11,12 @@ klib_sources = files(
     'src/math/approx.c',
     'src/math/matrix.c',
     'src/math/vector.c',
+    'src/math/prime.c',
     'src/randutils/randstring.c',
     'src/sort/radix.c',
     'src/sort/sort.c',
+    'src/hashtable/hashtable.c',
+    'src/hashtable/hash.c',
     'src/string/substring.c',
 
 )
@@ -29,6 +32,7 @@ inc_files = files(
     'include/klib/sort.h',
     'include/klib/vector.h',
     'include/klib/string.h',
+    'include/klib/hashtable.h',
 )
 
 # written in RV64 asm

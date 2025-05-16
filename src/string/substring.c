@@ -71,6 +71,7 @@ int substring_searchKmp(char *source, char *sub) {
   int start = -1;
   while (i < srcsize) {
     if (j >= subsize) {
+      free(shift);
       return start;
     }
     if (source[i] == sub[j]) {
@@ -88,6 +89,7 @@ int substring_searchKmp(char *source, char *sub) {
     i++;
   }
 
+  free(shift);
   // edge case, source="hello" sub="lol"  
   if (sub[j] == '\0') {
     return start;
@@ -121,6 +123,7 @@ int substring_searchBoyerMoore(char *source, char *sub) {
   int j = size;
   while (s <= (srcsize - subsize)) {
     if (j < 0) {
+      free(map);
       return s;
     }
     if (source[s+j] == sub[j]) {
@@ -131,5 +134,6 @@ int substring_searchBoyerMoore(char *source, char *sub) {
       j = size;
     }
   }
+  free(map);
   return -1;
 }
