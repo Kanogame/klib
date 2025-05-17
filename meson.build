@@ -18,7 +18,8 @@ klib_sources = files(
     'src/hashtable/hashtable.c',
     'src/hashtable/hash.c',
     'src/string/substring.c',
-
+    'src/tree/bst.c',
+    'src/graph/graph.c',
 )
 
 inc_files = files(
@@ -33,6 +34,8 @@ inc_files = files(
     'include/klib/vector.h',
     'include/klib/string.h',
     'include/klib/hashtable.h',
+    'include/klib/bst.h',
+    'include/klib/graph.h',
 )
 
 # written in RV64 asm
