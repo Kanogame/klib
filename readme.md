@@ -15,6 +15,10 @@ This library is a part of my meson C template, it will be pulled as soon as you 
 ## TODO
 
 - write every combination func
+- finish algos for BST
+- AVT
+- red-black-tree
+- pref sums (general + applications)
 - finish algos for graphs
 - revise headers
 - start crypto

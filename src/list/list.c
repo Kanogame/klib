@@ -45,6 +45,13 @@ Node *list_SearchNextAny(Node *top, void *value, int equal(void *, void *)) {
   return res;
 }
 
+void *list_Pop(Node **top) {
+  Node *temp = *top;
+  void* res = (*top)->value;
+  *top = temp->next;
+  return res;
+}
+
 void *list_Remove(Node *top, void *value, int equal(void *, void *)) {
   Node *S = list_SearchNext(top, value, equal);
   Node *D;

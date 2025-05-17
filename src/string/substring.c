@@ -65,7 +65,6 @@ int substring_searchKmp(char *source, char *sub) {
 
   int *shift = kmpShift(sub, subsize);
 
-
   int i = 0;
   int j = 0;
   int start = -1;
@@ -81,7 +80,7 @@ int substring_searchKmp(char *source, char *sub) {
       j++;
     } else {
       if (start != -1) {
-	i = start + j - shift[j] - 1;
+	  i = start + j - shift[j] - 1;
       }
       start = -1;
       j = 0;

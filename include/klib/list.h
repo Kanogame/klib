@@ -16,6 +16,7 @@ Node *list_SearchNext(Node *top, void *value, int equal(void *, void *));
 
 Node *list_SearchNextAny(Node *top, void *value, int equal(void *, void *));
 void *list_Remove(Node *top, void *value, int equal(void *, void *));
+void *list_Pop(Node **top);
 Node *list_AddS(Node *top, void *value, int equal(void *, void *),
                 int comparator(void *, void *));
 

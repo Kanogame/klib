@@ -1,5 +1,5 @@
-#ifndef KLIB_STRING_H
-#define KLIB_STRING_H
+#ifndef KLIB_STRING
+#define KLIB_STRING
 
 
 // substring_searchSimple simplest substing search
